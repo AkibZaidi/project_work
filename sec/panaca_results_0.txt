@@ -1,0 +1,148 @@
+  #####################################
+# Main configuration file of PANACA #
+#####################################
+
+#################################
+# Simulation related parameters #
+#################################
+# The duration of the measurement phase in clock cycles 
+simulationCycles = 5000
+
+# The warm up time for the SystemC simulation in clock cycles
+# The measurement starts after the warm up time has expired
+warmUpCycles = 5000
+
+# The warm up time for the SystemC simulation in clock cycles
+# The cooldown starts after the measuring time has expired
+cooldownCycles = 20000
+
+# Global Time Quantum in µs
+globalQuantum = 10
+
+# Frequency in MHz
+clockFrequency = 100
+
+# Verbosity level
+# None, Low, Medium, High, Full, Debug
+verbosity = None
+
+# Verbosity level for output regarding security measurements
+# NoSecurity, MinimalSecurity, DetailedSecurity
+outputVerbosity = MinimalSecurity
+
+# Processing element
+# TrafficGenerator
+processingElement = TrafficGenerator
+
+# Output results (stdout, csv)
+outputType = csv
+
+##################
+# NoC parameters #
+##################
+# Topology 
+# Mesh
+topology = Mesh
+
+# Routing algorithm:
+# Mesh: XY, WestFirst, NorthLast, NegFirst, OddEven, DyXY, DyAD
+
+routingAlgorithm = XY
+
+# Adaptive path selection type for routing algorithms which don't specify a precise implementation of the adaptive routing
+# Works with mesh algorithms: WestFirst, NorthLast, NegFirst, OddEven
+# Has no effect on algorithms which are not listed
+# Implementation to chose from: Minimal, DynWeightedMinimal, ...
+adaptivePathSelection = Minimal
+
+# Size of the network
+# Mesh and torus: Number of columns is x and number of rows is y
+# Ring: Number of routers is x
+x = 4
+y = 4
+
+# size of input flit buffer of a channel in flits
+bufferSize = 120
+#bufferSize = 8
+
+# number of virtual channels per physical channel. Each virtual channel is of size bufferSize in flitSize.
+# implementation is at this point symmetrical across the physical channels, i.e. each physical channel has the same ammout of VCs
+# do not set to 0 as it would lead to malfunction! Setting to 1 equivalent to physical channel only
+numberVirtualChannels = 1
+
+# Size of one flit in byte
+flitSize = 16
+
+# clock cycles of flits
+delayHeader     = 8
+delayBody       = 2
+delayTail       = 2
+
+################################
+# Traffic generator parameters #
+################################
+
+# Taffic pattern for the traffic generators
+# Random, Bitcomplement, Bitrevers, Bitrotate, Bitshuffle, Transpose1, Transpose2, Fixed
+
+trafficPattern = Bitcomplement
+
+# Packet injection rate -> be careful: flit injection rate is dependent the packet sizes
+packetInjectionRate = 0.001
+packetLength = 128
+#packetLength = 8
+
+################################
+# Network interface parameters #
+################################
+
+# Security level which defines the provided security measures
+# Available: None, AckOnly, ArqOnly, Full
+securityLevel = None
+
+# Size of RTB in flits
+rtbSizePackets = 2
+
+# Ack waiting time in µs
+ackWaitTime = 16
+
+# Cycles for Security processes
+delayEncrypt    = 2
+delayDecrypt    = 2
+delayMAC        = 2
+
+# Key size for key exchange protocol (32bit, 128bit, 256bit, 512bit, 1024bit, 2048bit, 4096bit) based on RSA modulus
+motKeySize = 32
+
+# Whether or not the key exchange should be simulated
+# If set to false then the TopLevelTrafficGenerator will generate random values for the keys needed for the PRINCE algorithm
+# If set to true then the TopLevelTrafficGenerator will initiate the modified Okamoto-Tanaka key agreement protocol
+simulateKeyExchange = false
+
+# Whether or not only the key exchange should be simulated or the full simulation should take place
+keyExchangeOnly = false
+
+#####################
+# Attack parameters #
+#####################
+
+# Number of possible ARQs
+arqLimit = 1
+
+# Duration of the release timer in us
+releaseTimer = 25
+
+# Weight of attacks (should be equal to 1 in sum)
+weightModifyAttack = 0.5
+weightDropAttack = 0.5
+
+# General probability of an attack happening
+attackProbability = 0.1
+
+# number of infected routers chosen at the beginning of the simulation
+numberOfAttackers = 1
+
+#################################
+# RISC-V VP configuration files #
+#################################
+#riscvconfig = RiscV-VP-0.config
